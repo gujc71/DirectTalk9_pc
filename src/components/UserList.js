@@ -26,9 +26,6 @@ class Listview extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Typography variant="title" gutterBottom align="center">
-          User List
-        </Typography>
         <List className={classes.list}>
               {
                   users.map((row, inx) => (
