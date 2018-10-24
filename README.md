@@ -22,7 +22,8 @@ This app is suitable for enterprise messenger where all users appears because th
 - npm install
 - set config for [firebase](https://firebase.google.com/docs/web/setup?authuser=0) in Firestore.js 
 - enable services(Auth, Storage, Firestore) in the firebase console.
-- npm start dev
+- npm run build
+- npm run dev
 
 
 ### License ###
