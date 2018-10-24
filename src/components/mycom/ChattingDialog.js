@@ -119,7 +119,7 @@ class ChattingDialog extends React.Component {
     const { dialogOpen, classes, uid, selectedRoom, chattings } = this.props;
     
     return (
-      <Dialog open={dialogOpen} onClose={this.handleDialogClose} aria-labelledby="form-dialog-title" fullWidth>
+      <Dialog open={dialogOpen} onClose={this.handleDialogClose} aria-labelledby="form-dialog-title" fullScreen>
         <DialogTitle disableTypography id="form-dialog-title" className={classes.dialogTitle}>
           <h2>{selectedRoom.title}</h2>
           <IconButton onClick={this.handleDialogClose} style={{float:"right"}}><CloseIcon /></IconButton>            
