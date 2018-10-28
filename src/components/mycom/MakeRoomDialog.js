@@ -22,7 +22,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import styles from './styles4List';
-import {firebase_make_chatroom} from '../../reducer/App_reducer';
+import {dialog_open} from '../../reducer/App_reducer';
+import {firestore} from '../../reducer/Firestore';
 
 class MakeRoomDialog extends React.Component {
 
@@ -51,10 +52,28 @@ class MakeRoomDialog extends React.Component {
       alert("Please select two or more participants");
       return;
     }
-    this.props.dispatch(firebase_make_chatroom (this.state.checked));
+    const uid = this.props.uid;
+    const users = this.props.users;
+    const toUsers = this.state.checked;
+
+    let makeRoomdata = {
+      title: null,
+      users: {}
+    }
+    toUsers.map(inx => {
+      makeRoomdata.users[users[inx].uid] = 0;
+      return inx;
+    });
+    makeRoomdata.users[uid] = 0;        
+
+    var doc = firestore.collection('rooms').doc();
+    doc.set(makeRoomdata);
+
+    makeRoomdata.title = "Chatting";
+    makeRoomdata.roomid = doc.id;
+    this.props.dispatch(dialog_open(makeRoomdata) );
     this.props.handleMakeRoomDialogClose();
   };
-
 
   render() {
     const { uid, makeRoomDialogOpen, classes, users, handleMakeRoomDialogClose } = this.props;

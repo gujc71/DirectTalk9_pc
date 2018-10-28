@@ -20,7 +20,7 @@ function MyFloatingButton(props) {
   const { classes } = props;
   return (
     <div>
-      <Tooltip title="new Post">
+      <Tooltip title="Make Chatting Room">
         <Button variant="fab" color="secondary" className={classes.absolute} onClick={props.handleClick}>
           <AddIcon />
         </Button>

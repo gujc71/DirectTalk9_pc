@@ -1,7 +1,11 @@
 
 .chat-list { 
    _padding: 10px 0px;
-   margin-top: 0px !important;
+  margin-top: 0px !important;
+  height: calc(100vh - 210px);
+  overflow: auto;   
+  width: 100%;
+  padding: 10px;
 } 
 
 .chat-row { 
@@ -118,3 +122,15 @@
   margin-right: -10px; 
 }
 
+.chat-footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%; 
+  background-color: white;
+}
+
+.chat-progress {
+  position: absolute;
+  right: 101px;
+  top: -71px;
+}	

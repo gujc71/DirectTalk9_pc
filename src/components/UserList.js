@@ -9,16 +9,13 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import WorkIcon from '@material-ui/icons/PermIdentity';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Typography from '@material-ui/core/Typography';
 
 import styles from './mycom/styles4List';
-import {firebase_find_chatroom, show_dialog} from '../reducer/App_reducer';
-import ChattingDialog from './mycom/ChattingDialog';
+import {dialog_open} from '../reducer/App_reducer';
 
 class Listview extends React.Component {
   handleUserClick = (user) => {
-    this.props.dispatch(firebase_find_chatroom(user));
-    this.props.dispatch(show_dialog(true) );
+    this.props.dispatch(dialog_open(user) );
   }
 
   render() {
@@ -46,7 +43,6 @@ class Listview extends React.Component {
                   ))
               }          
         </List>
-        <ChattingDialog />  
       </div>
     );
   }

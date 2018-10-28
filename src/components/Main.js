@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import NewWindow from 'react-new-window'
 import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -14,8 +15,9 @@ import UserList from './UserList';
 import RoomList from './RoomList';
 import UserProfile from './UserProfile';
 import SignIn from './SignIn'; 
+import ChattingWindow from './mycom/ChattingWindow';
 
-import {login, firebase_user_list, firebase_rooms_list} from '../reducer/App_reducer';
+import {login, firebase_user_list, firebase_rooms_list, dialog_close} from '../reducer/App_reducer';
 import {firebaseAuth} from '../reducer/Firestore';
 
 const styles = theme => ({
@@ -82,11 +84,17 @@ class Main extends React.Component {
   handleTabChange = (event, value) => {
     this.setState({ value: value });
   };
+	handleChatWindowsUnload = (closeWindow) => {
+    console.log(closeWindow);
+    if (closeWindow.chatlistener) closeWindow.chatlistener();
+    this.props.dialog_close(closeWindow.room.roomid);
+  }
 
   render() {
-    const { classes, uid } = this.props;
+    const { classes, uid, chatWindows } = this.props;
     const { value } = this.state;
 
+    chatWindows.map(block => console.log(block));
     return (
       <div className={classes.root}>
         <Tabs value={value} onChange={this.handleTabChange} classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }} centered>
@@ -105,6 +113,7 @@ class Main extends React.Component {
           }
         </div>
         <MySnackbar />
+        { chatWindows.map( (win, inx) => <NewWindow key={inx} onUnload={this.handleChatWindowsUnload.bind(this, win)} features={{width: "430", height: "600", menubar:"no"}}><ChattingWindow room={win.room}/></NewWindow>) }
       </div>
     );
   }
@@ -118,13 +127,15 @@ let mapStateToProps = (state) => {
   return {
     uid: state.uid,
     users: state.users,
+    chatWindows: state.chatWindows
   };
 }
 
 const mapDispatchToProps = dispatch => ({
-login: uid => dispatch(login(uid)),
-firebase_user_list: () => dispatch(firebase_user_list()),
-firebase_rooms_list: () => dispatch(firebase_rooms_list()),
+  login: uid => dispatch(login(uid)),
+  firebase_user_list: () => dispatch(firebase_user_list()),
+  firebase_rooms_list: () => dispatch(firebase_rooms_list()),
+  dialog_close: () => dispatch(dialog_close()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Main));

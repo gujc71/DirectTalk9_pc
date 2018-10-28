@@ -4,6 +4,7 @@ This is a messenger app for PC with electron based on Firebase (Cloud Firestore)
 
 This app is suitable for enterprise messenger where all users appears because there is no management function such as add / delete / find friends.
 
+![screenshot](./screenshot.png)
 
 ### Other Versions ###
 
@@ -21,9 +22,8 @@ This app is suitable for enterprise messenger where all users appears because th
 - git clone https://github.com/gujc71/directTalk9_pc.git
 - npm install
 - set config for [firebase](https://firebase.google.com/docs/web/setup?authuser=0) in Firestore.js 
-- enable services(Auth, Storage, Firestore) in the firebase console.
-- npm run build
-- npm run dev
+- enable services(Authentication, Storage, Firestore) in the firebase console.
+- npm run dev (or - npm run build - npm run electron)
 
 
 ### License ###

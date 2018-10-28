@@ -7,14 +7,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import WorkIcon from '@material-ui/icons/PermIdentity';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import Typography from '@material-ui/core/Typography';
 
 import styles from './mycom/styles4List';
 import { connect } from 'react-redux';
-import {firebase_chat_list, show_dialog} from '../reducer/App_reducer';
+import {dialog_open} from '../reducer/App_reducer';
 
 import MyFloatingButton from './mycom/MyFloatingButton';
-import ChattingDialog from './mycom/ChattingDialog';
 import MakeRoomDialog from './mycom/MakeRoomDialog';
 
 class Listview extends React.Component {
@@ -23,8 +21,7 @@ class Listview extends React.Component {
   };
 
   handleRoomClick = (row) => {
-    this.props.dispatch(firebase_chat_list(row));
-    this.props.dispatch(show_dialog(true) );
+    this.props.dispatch(dialog_open(row) );
   }
 
   handleMakeRoom = () => {
@@ -49,10 +46,11 @@ class Listview extends React.Component {
         const roomusers = Object.keys(row.users);
         var title = "";
         roomusers.some(function(item) {
-          if (uid===item) return;
+          if (uid===item) return false;
           const user = users.find(user => user.uid === item);
           if (user) title += user.usernm + ",";
           if (title.length > 30) return true;
+          return false;
         })
         row.title = title.substring(0, title.length-1);
       }
@@ -80,7 +78,6 @@ class Listview extends React.Component {
                 ))
               }          
         </List>
-        <ChattingDialog /> 
         <MakeRoomDialog makeRoomDialogOpen={makeRoomDialogOpen} handleMakeRoomDialogClose={this.handleMakeRoomDialogClose} />
         <MyFloatingButton handleClick={this.handleMakeRoom}/>
       </div>
@@ -97,6 +94,7 @@ let mapStateToProps = (state) => {
     uid: state.uid,
     users: state.users,
     rooms: state.rooms,
+    chatWindows: state.chatWindows
   };
 }
 
